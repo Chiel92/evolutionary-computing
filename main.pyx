@@ -1,1 +1,1 @@
-from benchmarks import trap_functions
+from benchmarks import operators
