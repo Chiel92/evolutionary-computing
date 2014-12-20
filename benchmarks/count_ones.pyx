@@ -1,7 +1,5 @@
-# encoding: utf-8
-# filename: count_ones.pyx
 """
-This module contains all kinds of fitness functions.
+Benchmarks for counting functions.
 """
 from bitset cimport size, index
 

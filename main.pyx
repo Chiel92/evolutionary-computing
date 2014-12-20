@@ -1,1 +1,1 @@
-from benchmarks import count_ones
+from benchmarks import trap_functions
