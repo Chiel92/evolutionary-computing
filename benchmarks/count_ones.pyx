@@ -3,7 +3,6 @@
 """
 This module contains all kinds of fitness functions.
 """
-cimport bitset
 from bitset cimport size, index
 
 from bitset import iterate
@@ -39,18 +38,6 @@ cpdef int lin_scaled_count_ones3(unsigned long long x):
     return result
 
 
-def test(f):
-    cdef unsigned long long blackhole = 0
-    cdef unsigned long long a = 0L
-    cdef unsigned long long bound = 2 ** 30
-
-    while a < bound:
-        blackhole += f(a)
-        a += 1000
-
-    return blackhole
-
-
 def test1():
     cdef unsigned long long blackhole = 0
     cdef unsigned long long a = 0L
@@ -58,7 +45,7 @@ def test1():
 
     while a < bound:
         blackhole += count_ones1(a)
-        a += 1000
+        a += 100
 
     return blackhole
 
@@ -70,7 +57,7 @@ def test2():
 
     while a < bound:
         blackhole += count_ones2(a)
-        a += 1000
+        a += 100
 
     return blackhole
 
@@ -82,15 +69,46 @@ def test3():
 
     while a < bound:
         blackhole += __builtin_popcountll(a)
+        a += 100
+
+    return blackhole
+
+
+def test4():
+    cdef unsigned long long blackhole = 0
+    cdef unsigned long long a = 0L
+    cdef unsigned long long bound = 2 ** 30
+
+    while a < bound:
+        blackhole += lin_scaled_count_ones1(a)
+        a += 1000
+
+    return blackhole
+
+
+def test5():
+    cdef unsigned long long blackhole = 0
+    cdef unsigned long long a = 0L
+    cdef unsigned long long bound = 2 ** 30
+
+    while a < bound:
+        blackhole += lin_scaled_count_ones2(a)
+        a += 1000
+
+    return blackhole
+
+
+def test6():
+    cdef unsigned long long blackhole = 0
+    cdef unsigned long long a = 0L
+    cdef unsigned long long bound = 2 ** 30
+
+    while a < bound:
+        blackhole += lin_scaled_count_ones3(a)
         a += 1000
 
     return blackhole
 
 compare([test1, test2, test3])
+compare([test4, test5, test6])
 
-#profile('test1()', globals(), locals())
-#profile('test2()', globals(), locals())
-#profile('test3()', globals(), locals())
-#profile('test(lin_scaled_count_ones1)', globals(), locals())
-#profile('test(lin_scaled_count_ones2)', globals(), locals())
-#profile('test(lin_scaled_count_ones3)', globals(), locals())
