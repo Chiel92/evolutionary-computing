@@ -12,7 +12,10 @@ import pstats, cProfile
 def profile(evalstring, glob, loc, filename='Profile.prof'):
     """Evaluate and profile given string."""
     #cProfile.runctx(evalstring, globals(), locals(), filename)
-    cProfile.runctx(evalstring, glob, loc, filename)
+    cProfile.runctx('print({})'.format(evalstring), glob, loc, filename)
     report = pstats.Stats(filename)
     report.strip_dirs().sort_stats("time").print_stats()
 
+def compare(function_list, filename='Profile.prof'):
+    for f in function_list:
+        profile('f()', globals(), locals(), filename)
