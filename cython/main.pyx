@@ -1,8 +1,16 @@
-from bitset cimport print_bitset, bitset_tostring
+from bitset cimport print_bitset
 
 cdef extern from "cbitset.h":
     ctypedef unsigned long long bitset
 
-cdef bitset x = <bitset>5 << 70
+# x contains a number consisting of more than 64 1's
+cdef bitset x = (<bitset>1 << 70) - 1
 print_bitset(x)
-print(bitset_tostring(x))
+
+# Casting doesn't work properly
+print_bitset(<int>x)
+
+# Shifting first seems to work however
+x >>= 64
+print_bitset(<int>x)
+

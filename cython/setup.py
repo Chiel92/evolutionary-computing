@@ -2,8 +2,8 @@ from distutils.core import setup
 from Cython.Build import cythonize
 
 setup(
-    name="My hello app",
-    ext_modules=cythonize('bitset.pyx', 'main.pyx'),  # accepts a glob pattern
+    name="My app that used 128 bit ints",
+    ext_modules=cythonize('main.pyx')
 )
 #from distutils.core import setup
 #from Cython.Build import cythonize
