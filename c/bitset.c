@@ -1,11 +1,13 @@
-/*#include "header_int128.h"*/
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdint.h>
-#include <inttypes.h>
 #include <string.h>
 
 typedef unsigned __int128 bitset;
+
+void test123(void)
+{
+    printf("Hello 123\n");
+}
 
 
 void reverse_string(char s[])
@@ -34,6 +36,7 @@ char* bitset_tostring(bitset n)
         n >>= 1;
         i++;
     }
+    bitstring[i] = '\0';
     reverse_string(bitstring);
     return bitstring;
 }
@@ -43,19 +46,10 @@ void print_bitset(bitset n)
     printf("%s\n", bitset_tostring(n));
 }
 
-int main()
+int main(void)
 {
-    /*printf("Number of bits available: %d\n", (int)(sizeof(uint128) * 8));*/
-    /*uint128 a = (uint128)1 << (uint128)100;*/
-    /*uint128 b = (uint128)1 << (uint128)10;*/
-    /*printf("Bit count: %d\n", __builtin_popcountll(a));*/
-    /*printf("Bit count: %d\n", __builtin_popcountll(b));*/
-
-    /*print_uint1282(a);*/
-    /*print_uint1282(b);*/
-    /*print_bitset(a);*/
-    /*print_bitset(b);*/
-    bitset x = (bitset)5 << 100;
+    printf("Number of bits available: %d\n", (int)(sizeof(bitset) * 8));
+    bitset x = (bitset)1023 << 70;
     print_bitset(x);
     return 0;
 }
