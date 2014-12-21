@@ -1,1 +1,2 @@
-from benchmarks import operators
+#from benchmarks import operators
+import foo
