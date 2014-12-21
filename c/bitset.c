@@ -5,9 +5,6 @@
 #include <inttypes.h>
 #include <string.h>
 
-/*typedef __uint128_t uint128;*/
-/*typedef __int128_t int128;*/
-typedef unsigned __int128 uint128;
 typedef unsigned __int128 bitset;
 
 
@@ -22,31 +19,6 @@ void reverse_string(char s[])
         s[i] = s[j];
         s[j] = c;
     }
-}
-
-
-void print_uint128(uint128 x)
-{
-    int count = (int) (128 / (sizeof(uint64_t) * 8));
-    printf("Int64's to print: %d\n", count);
-    for (int i = 0; i < count; ++i)
-    {
-        /*printf("%d\n", (int)x);*/
-        printf("%09" PRIu64, (uint64_t) x);
-        x = x >> (uint128)(sizeof(uint64_t) * 8);
-    }
-    printf("%s", "\n");
-}
-
-void print_uint1282(uint128 x)
-{
-    /*printf("%d\n", (int)x);*/
-    uint64_t part2 = (uint64_t) x;
-    x = x >> (uint128)64;
-    uint64_t part1 = (uint64_t) x;
-    printf("%" PRIu64 " ", (uint64_t) part1);
-    printf("%" PRIu64 " ", (uint64_t) part2);
-    printf("%s", "\n");
 }
 
 char* bitset_tostring(bitset n)
