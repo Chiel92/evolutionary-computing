@@ -1,8 +1,8 @@
 
-cdef extern from "gcc_int128.h":
-    ctypedef unsigned long long int128
+cdef extern from "uint128.h":
+    ctypedef unsigned long long uint128
 
-cdef int size(int128)
-cdef int domain(int128)
-cdef int index(int128)
-cpdef tostring(int128)
+cdef int size(uint128)
+cdef int domain(uint128)
+cdef int index(uint128)
+cpdef tostring(uint128)
