@@ -1,8 +1,13 @@
 from distutils.core import setup
 from Cython.Build import cythonize
+from distutils.extension import Extension
+
+#extensions = [
+    #Extension("main", 'main.pyx'),
+    #Extension("bitset", 'bitset.pyx')
+#]
 
 setup(
-    name="My app that uses 128 bit ints",
-    ext_modules=cythonize('main.pyx', compiler_directives={'profile': True})
+    ext_modules=cythonize("*.pyx",
+                          compiler_directives={'profile': True})
 )
-
