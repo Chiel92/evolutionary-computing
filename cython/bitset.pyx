@@ -1,4 +1,4 @@
-from libc.stdlib cimport malloc
+from libc.stdlib cimport malloc, free
 from libc.stdio cimport printf
 
 cdef extern from "string.h":
@@ -36,5 +36,7 @@ cdef char* bitset_tostring(bitset n):
     return bitstring
 
 cdef void print_bitset(bitset n):
-    printf("%s\n", bitset_tostring(n))
+    cdef char* string = bitset_tostring(n)
+    printf("%s\n", string)
+    free(string)
 

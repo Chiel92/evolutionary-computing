@@ -673,15 +673,15 @@ PyMODINIT_FUNC PyInit_main(void)
   /* "main.pyx":7
  * 
  * # x contains a number consisting of more than 64 1's
- * cdef bitset x = (<bitset>1 << 100) - 1             # <<<<<<<<<<<<<<
+ * cdef bitset x = (<bitset>1 << 70) - 1             # <<<<<<<<<<<<<<
  * print_bitset(x)
  * 
  */
-  __pyx_v_4main_x = ((((bitset)1) << 100) - 1);
+  __pyx_v_4main_x = ((((bitset)1) << 70) - 1);
 
   /* "main.pyx":8
  * # x contains a number consisting of more than 64 1's
- * cdef bitset x = (<bitset>1 << 100) - 1
+ * cdef bitset x = (<bitset>1 << 70) - 1
  * print_bitset(x)             # <<<<<<<<<<<<<<
  * 
  * # Casting doesn't work properly
@@ -700,15 +700,15 @@ PyMODINIT_FUNC PyInit_main(void)
   /* "main.pyx":14
  * 
  * # Shifting first seems to work however
- * x >>= 39             # <<<<<<<<<<<<<<
+ * x >>= 64             # <<<<<<<<<<<<<<
  * print_bitset(<int>x)
  * 
  */
-  __pyx_v_4main_x = (__pyx_v_4main_x >> 39);
+  __pyx_v_4main_x = (__pyx_v_4main_x >> 64);
 
   /* "main.pyx":15
  * # Shifting first seems to work however
- * x >>= 39
+ * x >>= 64
  * print_bitset(<int>x)             # <<<<<<<<<<<<<<
  * 
  */
