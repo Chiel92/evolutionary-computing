@@ -1,6 +1,7 @@
 cdef extern from "uint128.h":
     ctypedef unsigned long long uint128
 
+
 cdef extern int __builtin_popcountll(unsigned long long x)
 cdef extern int __builtin_ctzll(unsigned long long x)
 
@@ -53,21 +54,18 @@ def iterate(uint128 n):
 
 
 cpdef tostring(uint128 n):
-    #cdef char* bitstring = <char*>malloc(8 * sizeof(uint128) * sizeof(char) + 1)
     bitstring = []
     cdef int i = 0
     while i < 128:
         if i == 32 or i == 64 or i == 96:
             bitstring.append('|')
 
-        if (n & <uint128>1):
-            #bitstring[i] = '1'
+        if (n & 1):
             bitstring.append('1')
         else:
-            #bitstring[i] = '0'
             bitstring.append('0')
 
-        n >>= <uint128>1
+        n >>= 1
         i += 1
     return ''.join(reversed(bitstring))
 
