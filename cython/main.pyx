@@ -1,18 +1,10 @@
-from bitset cimport uint128, tostring
-from libc.stdio cimport printf
+from bitset cimport uint128, tostring, index, size
 
 
 # x contains a number consisting of more than 64 1's
-cdef uint128 x = (<uint128>1 << 70) - 1
+#cdef uint128 x = (<uint128>1 << 70) - 1
+cdef uint128 x = (<uint128>1 << 127) + (<uint128>1 << 0)
+#cdef uint128 x = (<uint128>0)
 print(tostring(x))
-print(x)
-
-# Casting works using cython stuff
-print(tostring(<unsigned int>x))
-print(<unsigned int>x)
-#print(2**32 - 1)
-
-# Casting doesn't work properly using c stuff
-printf("%d\n", <unsigned int>x)
-
+print(size(x))
 
