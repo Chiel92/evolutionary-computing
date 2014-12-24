@@ -27,6 +27,17 @@ cdef uint128 randuint128():
     return result
 
 
+def randbitstream():
+    cdef unsigned int sample
+    cdef unsigned int i
+    while 1:
+        sample = rand()
+        i = 1
+        while i:
+            yield bool(sample & i)
+            i <<= 1
+
+
 def two_point_crossover(uint128 x, uint128 y):
     cdef int k1 = randomint(100)
     cdef int k2 = randomint(100)
@@ -61,4 +72,20 @@ def uniform_crossover(uint128 x, uint128 y):
         i <<= 1
 
     return fx, fy
+
+def mutation(uint128 x):
+    # Decide number of bits to be flipped
+    cdef uint128 number = 1
+    randomstream = randbitstream()
+    while next(randomstream):
+        number <<= 1
+
+    # Flip random bits
+    # NOTE: in theory it is possible that a bit is flipped multiple times
+    # But for reasons of speed and since it doesn't matter that much, we allow this to happen
+    for _ in range(number):
+        bit = (<uint128>1 << randomint(100))
+        x ^= bit
+
+    return x
 
