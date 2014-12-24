@@ -4,4 +4,6 @@ cdef extern from "uint128.h":
 
 cdef int size(uint128)
 cdef int index(uint128)
+cdef uint128 invert(uint128, unsigned int)
+
 cpdef tostring(uint128)

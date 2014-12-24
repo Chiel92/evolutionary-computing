@@ -1,10 +1,9 @@
-from bitset cimport uint128, tostring, index, size
+from bitset cimport uint128, tostring, index, size, invert
 
 
 # x contains a number consisting of more than 64 1's
-#cdef uint128 x = (<uint128>1 << 70) - 1
-cdef uint128 x = (<uint128>1 << 127) + (<uint128>1 << 0)
-#cdef uint128 x = (<uint128>0)
+cdef uint128 x = (<uint128>1 << 100)
+
 print(tostring(x))
-print(size(x))
+print(tostring(invert(x, 32)))
 

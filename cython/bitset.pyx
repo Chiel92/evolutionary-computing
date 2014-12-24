@@ -20,6 +20,9 @@ cdef int size(uint128 x):
     return __builtin_popcountll(x) + __builtin_popcountll(<unsigned long long>(x >> 64))
 
 
+cdef uint128 universe = ((<uint128>1 << 127) - 1) + (<uint128>1 << 127)
+
+
 cdef uint128 subtract(uint128 self, uint128 other):
     return self - (self & other)
 
@@ -28,9 +31,10 @@ cdef contains(uint128 self, uint128 other):
     return self & other == self
 
 
-cdef uint128 invert(uint128 x, uint128 l):
+cdef uint128 invert(uint128 x, unsigned int l):
     """Return inverse where universe has length l"""
-    return 2ULL ** l - 1 - x
+    l = 128 - l
+    return subtract(((universe << l) >> l), x)
 
 
 cpdef uint128 join(args):
@@ -53,7 +57,7 @@ cpdef tostring(uint128 n):
     bitstring = []
     cdef int i = 0
     while i < 128:
-        if i == 64:
+        if i == 32 or i == 64 or i == 96:
             bitstring.append('|')
 
         if (n & <uint128>1):
