@@ -7,23 +7,28 @@ from bitset import iterate
 from utils cimport randomint
 
 
-def shuffle(uint128 x):
+def shuffled(uint128 x):
     """Shuffle bits 0 to 99 using fisher-yates shuffle."""
-    cdef int i = 99, j
+    cdef int i, j
     cdef uint128 t
 
     for i in range(99, -1 ,-1):
-        j = randomint(i)
+        j = randomint(i + 1)
 
-        # Swap bit positions i and j
-        t = ((x >> i) ^ (x >> j)) & 1 # XOR temporary
-        x = x ^ ((t << i) | (t << j))
+        if i != j:
+            # Swap bit positions i and j
+            t = ((x >> i) ^ (x >> j)) & 1 # XOR temporary
+            x = x ^ ((t << i) | (t << j))
 
     return x
 
 
 def count_ones(uint128 x):
     return size(x)
+
+
+def count_zeros(uint128 x):
+    return 128 - size(x)
 
 
 def lin_scaled_count_ones(uint128 x):
@@ -65,12 +70,12 @@ def tn_trap(uint128 x):
 
 
 def rd_trap(uint128 x):
-    x = shuffle(x)
+    x = shuffled(x)
     return td_trap(x)
 
 
 def rn_trap(uint128 x):
-    x = shuffle(x)
+    x = shuffled(x)
     return tn_trap(x)
 
 
