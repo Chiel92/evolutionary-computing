@@ -1,4 +1,4 @@
-from bitset cimport uint128, tostring
+from bitset cimport uint128, tostring, bit
 from utils cimport randomint, randuint100
 from utils import shuffle
 from fitnessfunctions import count_ones
@@ -6,7 +6,7 @@ from operators import two_point_crossover, uniform_crossover
 from heapq import nlargest
 
 fitness = count_ones
-crossover = uniform_crossover
+crossover = two_point_crossover
 
 def evolve(int popsize):
     cdef list population = [randuint100() for _ in range(popsize)]
@@ -48,6 +48,7 @@ def evolve(int popsize):
 
     best_solution = nlargest(1, population, key=fitness)[0]
     print('Best solution found: {}'.format(tostring(best_solution)))
+    return best_solution
 
 
 def find_popsize():
@@ -69,7 +70,7 @@ def find_popsize():
     # Find popsize
     while 1:
         print('Bounds: ({}, {})'.format(lowerbound, upperbound))
-        popsize = round((upperbound + lowerbound) / 2, -1)
+        popsize = int(round((upperbound + lowerbound) / 2, -1))
         if popsize == lowerbound or popsize == upperbound:
             return upperbound
 
@@ -80,7 +81,7 @@ def find_popsize():
 
 
 def test_popsize(popsize):
-    cdef uint128 optimum = (<uint128>1 << 100) - 1
+    cdef uint128 optimum = bit(100) - 1
     failures = 0
     for _ in range(30):
         if evolve(popsize) != optimum:
