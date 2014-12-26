@@ -1,5 +1,5 @@
-from bitset cimport uint128
-from utils cimport randomint, randuint128
+from bitset cimport uint128, tostring
+from utils cimport randomint, randuint100
 from utils import shuffle
 from fitnessfunctions import count_ones
 from operators import two_point_crossover, uniform_crossover
@@ -9,7 +9,7 @@ fitness = count_ones
 crossover = uniform_crossover
 
 def evolve(int popsize):
-    cdef list population = [randuint128() & ((<uint128>1 << 100) - 1) for _ in range(popsize)]
+    cdef list population = [randuint100() for _ in range(popsize)]
     cdef list newpopulation, offspring
     cdef uint128 x, y
     cdef list parents
@@ -47,7 +47,7 @@ def evolve(int popsize):
         population = newpopulation
 
     best_solution = nlargest(1, population, key=fitness)[0]
-    print('Best solution found: {}'.format(best_solution))
+    print('Best solution found: {}'.format(tostring(best_solution)))
 
 
 def find_popsize():

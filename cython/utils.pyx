@@ -1,10 +1,14 @@
 from libc.stdlib cimport rand, srand
 from libc.time cimport time
+from libc.math cimport ceil
+
+from bitset cimport bit
 
 
 # Seed the random number generator
 srand(time(NULL));
 
+print(RAND_MAX, 1 << 32)
 
 cdef extern from "stdlib.h":
     int RAND_MAX
@@ -17,10 +21,18 @@ cdef int randomint(int upperbound):
 
 cdef uint128 randuint128():
     cdef uint128 result = rand()
-    for _ in range(3):
-        result <<= 32
+    for _ in range(4):
+        result <<= 31
         result |= rand()
     return result
+
+
+cdef uint128 randuint100():
+    cdef uint128 result = rand()
+    for _ in range(3):
+        result <<= 31
+        result |= rand()
+    return result & (bit(100) - 1)
 
 
 def randbitstream():

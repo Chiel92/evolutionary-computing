@@ -2,6 +2,10 @@ cdef extern from "uint128.h":
     ctypedef unsigned long long uint128
 
 
+cdef uint128 bit(int position):
+    return (<uint128>1 << position)
+
+
 cdef extern int __builtin_popcountll(unsigned long long x)
 cdef extern int __builtin_ctzll(unsigned long long x)
 
