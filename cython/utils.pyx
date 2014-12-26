@@ -8,7 +8,6 @@ from bitset cimport bit
 # Seed the random number generator
 srand(time(NULL));
 
-print(RAND_MAX, 1 << 32)
 
 cdef extern from "stdlib.h":
     int RAND_MAX

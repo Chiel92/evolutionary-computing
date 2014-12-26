@@ -41,7 +41,7 @@ def uniform_crossover(uint128 x, uint128 y):
 
     return fx, fy
 
-def mutation(uint128 x):
+def mutate(uint128 x):
     # Decide number of bits to be flipped
     cdef uint128 number = 1
     randomstream = randbitstream()

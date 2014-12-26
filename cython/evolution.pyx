@@ -2,13 +2,11 @@ from bitset cimport uint128, tostring, bit
 from utils cimport randomint, randuint100
 from utils import shuffle
 from fitnessfunctions import count_ones
-from operators import two_point_crossover, uniform_crossover
+from operators import two_point_crossover, uniform_crossover, mutate
 from heapq import nlargest
 
-fitness = count_ones
-crossover = two_point_crossover
 
-def evolve(int popsize):
+def evolve(int popsize, fitness, crossover, mutation):
     cdef list population = [randuint100() for _ in range(popsize)]
     cdef list newpopulation, offspring
     cdef uint128 x, y
@@ -37,6 +35,11 @@ def evolve(int popsize):
             x, y = parents[i], parents[i + 1]
             offspring.extend(crossover(x, y))
 
+        # Mutation
+        if mutation:
+            for i in range(len(offspring)):
+                offspring[i] = mutate(offspring[i])
+
         # Survival of the fittest
         newpopulation = nlargest(popsize, population + offspring, key=fitness)
 
@@ -48,17 +51,17 @@ def evolve(int popsize):
 
     best_solution = nlargest(1, population, key=fitness)[0]
     #print('Best solution found: {}'.format(tostring(best_solution)))
-    print(tostring(best_solution))
+    #print(tostring(best_solution))
     return best_solution
 
 
-def find_popsize():
+def find_popsize(fitness, crossover, mutation=False):
     popsize = 10
 
     # Find bounds for popsize
     while 1:
         print('Bounds: ({}, infinity)'.format(popsize))
-        if test_popsize(popsize):
+        if test_popsize(popsize, fitness, crossover, mutation):
             break
         else:
             if popsize == 1280:
@@ -75,17 +78,17 @@ def find_popsize():
         if popsize == lowerbound or popsize == upperbound:
             return upperbound
 
-        if test_popsize(popsize):
+        if test_popsize(popsize, fitness, crossover, mutation):
             upperbound = popsize
         else:
             lowerbound = popsize
 
 
-def test_popsize(popsize):
+def test_popsize(popsize, fitness, crossover, mutation):
     cdef uint128 optimum = bit(100) - 1
     failures = 0
     for _ in range(30):
-        if evolve(popsize) != optimum:
+        if evolve(popsize, fitness, crossover, mutation) != optimum:
             failures += 1
         if failures > 1:
             break
