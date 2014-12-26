@@ -61,8 +61,8 @@ cpdef tostring(uint128 n):
     bitstring = []
     cdef int i = 0
     while i < 128:
-        if i == 32 or i == 64 or i == 96:
-            bitstring.append('|')
+        #if i == 32 or i == 64 or i == 96:
+            #bitstring.append('|')
 
         if (n & 1):
             bitstring.append('1')
@@ -71,5 +71,5 @@ cpdef tostring(uint128 n):
 
         n >>= 1
         i += 1
-    return ''.join(reversed(bitstring))
+    return ''.join(reversed(bitstring[:100]))
 

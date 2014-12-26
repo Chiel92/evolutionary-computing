@@ -47,7 +47,8 @@ def evolve(int popsize):
         population = newpopulation
 
     best_solution = nlargest(1, population, key=fitness)[0]
-    print('Best solution found: {}'.format(tostring(best_solution)))
+    #print('Best solution found: {}'.format(tostring(best_solution)))
+    print(tostring(best_solution))
     return best_solution
 
 
