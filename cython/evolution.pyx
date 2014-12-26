@@ -1,35 +1,27 @@
 from bitset cimport uint128
 from utils cimport randomint, randuint128
-from fitnessfunctions import count_zeros
+from utils import shuffle
+from fitnessfunctions import count_ones
 from operators import two_point_crossover, uniform_crossover
 from heapq import nlargest
 
-def shuffle(list l):
-    """Shuffle list using fisher-yates shuffle."""
-    cdef int j
+fitness = count_ones
+crossover = uniform_crossover
 
-    for i in range(len(l) - 1, -1 ,-1):
-        j = randomint(i + 1)
-        l[i], l[j] = l[j], l[i]
-
-fitness = count_zeros
-crossover = two_point_crossover
-cdef int populationsize = 50
-cdef int generations = 50
-
-def evolve():
-    cdef list population = [randuint128() & ((<uint128>1 << 100) - 1) for _ in range(populationsize)]
+def evolve(int popsize):
+    cdef list population = [randuint128() & ((<uint128>1 << 100) - 1) for _ in range(popsize)]
+    cdef list newpopulation, offspring
     cdef uint128 x, y
     cdef list parents
 
-    for _ in range(generations):
-        assert len(population) == populationsize
+    while 1:
+        assert len(population) == popsize
 
         # Parent selection
         parents = []
         for __ in range(2):
             shuffle(population)
-            for i in range(0, populationsize, 2):
+            for i in range(0, popsize, 2):
                 x, y = population[i], population[i + 1]
 
                 if fitness(x) >= fitness(y):
@@ -37,14 +29,63 @@ def evolve():
                 else:
                     parents.append(y)
 
-        assert len(parents) == populationsize
+        assert len(parents) == popsize
 
         # Offspring generation
-        for i in range(0, populationsize, 2):
+        offspring = []
+        for i in range(0, popsize, 2):
             x, y = parents[i], parents[i + 1]
-            population.extend(crossover(x, y))
+            offspring.extend(crossover(x, y))
 
         # Survival of the fittest
-        population = nlargest(populationsize, population, key=fitness)
-        print(nlargest(1, population, key=fitness))
+        newpopulation = nlargest(popsize, population + offspring, key=fitness)
+
+        # Terminate if offspring doesn't survive
+        if newpopulation == population:
+            break
+
+        population = newpopulation
+
+    best_solution = nlargest(1, population, key=fitness)[0]
+    print('Best solution found: {}'.format(best_solution))
+
+
+def find_popsize():
+    popsize = 10
+
+    # Find bounds for popsize
+    while 1:
+        print('Bounds: ({}, infinity)'.format(popsize))
+        if test_popsize(popsize):
+            break
+        else:
+            if popsize == 1280:
+                return popsize
+            popsize *= 2
+
+    upperbound = popsize
+    lowerbound = int(popsize / 2)
+
+    # Find popsize
+    while 1:
+        print('Bounds: ({}, {})'.format(lowerbound, upperbound))
+        popsize = round((upperbound + lowerbound) / 2, -1)
+        if popsize == lowerbound or popsize == upperbound:
+            return upperbound
+
+        if test_popsize(popsize):
+            upperbound = popsize
+        else:
+            lowerbound = popsize
+
+
+def test_popsize(popsize):
+    cdef uint128 optimum = (<uint128>1 << 100) - 1
+    failures = 0
+    for _ in range(30):
+        if evolve(popsize) != optimum:
+            failures += 1
+        if failures > 1:
+            break
+    return failures <= 1
 

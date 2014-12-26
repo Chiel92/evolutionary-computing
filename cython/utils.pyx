@@ -33,3 +33,11 @@ def randbitstream():
             yield bool(sample & i)
             i <<= 1
 
+def shuffle(list l):
+    """Shuffle list using fisher-yates shuffle."""
+    cdef int j
+
+    for i in range(len(l) - 1, -1 ,-1):
+        j = randomint(i + 1)
+        l[i], l[j] = l[j], l[i]
+
