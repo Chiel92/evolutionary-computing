@@ -21,6 +21,7 @@ def shuffle(uint128 x):
 
     return x
 
+
 def count_ones(uint128 x):
     return size(x)
 
@@ -61,4 +62,15 @@ def tn_trap(uint128 x):
             result += 4
 
     return result
+
+
+def rd_trap(uint128 x):
+    x = shuffle(x)
+    return td_trap(x)
+
+
+def rn_trap(uint128 x):
+    x = shuffle(x)
+    return tn_trap(x)
+
 
