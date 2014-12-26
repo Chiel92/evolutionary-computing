@@ -1,7 +1,7 @@
 from bitset cimport uint128
 from utils cimport randomint, randuint128
 from fitnessfunctions import count_zeros
-from operators import uniform_crossover
+from operators import two_point_crossover, uniform_crossover
 from heapq import nlargest
 
 def shuffle(list l):
@@ -12,35 +12,39 @@ def shuffle(list l):
         j = randomint(i + 1)
         l[i], l[j] = l[j], l[i]
 
+fitness = count_zeros
+crossover = two_point_crossover
+cdef int populationsize = 50
+cdef int generations = 50
+
 def evolve():
-    cdef int populationsize = 100
-    cdef list population = [randuint128() & (<uint128>1 << 100 - 1) for _ in range(100)]
+    cdef list population = [randuint128() & ((<uint128>1 << 100) - 1) for _ in range(populationsize)]
     cdef uint128 x, y
     cdef list parents
 
-    for _ in range(10):
+    for _ in range(generations):
+        assert len(population) == populationsize
+
         # Parent selection
         parents = []
-        for _ in range(2):
+        for __ in range(2):
             shuffle(population)
             for i in range(0, populationsize, 2):
                 x, y = population[i], population[i + 1]
 
-                if count_zeros(x) >= count_zeros(y):
+                if fitness(x) >= fitness(y):
                     parents.append(x)
                 else:
                     parents.append(y)
 
-        assert len(population) == populationsize
         assert len(parents) == populationsize
 
         # Offspring generation
         for i in range(0, populationsize, 2):
             x, y = parents[i], parents[i + 1]
-            population.extend(uniform_crossover(x, y))
+            population.extend(crossover(x, y))
 
         # Survival of the fittest
-        population = nlargest(populationsize, population)
-
-    print(population)
+        population = nlargest(populationsize, population, key=fitness)
+        print(nlargest(1, population, key=fitness))
 
