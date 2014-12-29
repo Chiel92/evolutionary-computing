@@ -67,7 +67,7 @@ cpdef double tn_trap(uint128 x):
         y = x & 15
 
         if y != 15:
-            result += (3 - size_int(y))
+            result += 3 - size_int(y)
         else:
             result += 8
         x >>= 4

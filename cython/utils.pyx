@@ -52,3 +52,9 @@ def shuffle(list l):
         j = randomint(i + 1)
         l[i], l[j] = l[j], l[i]
 
+def shuffled(l):
+    """Shuffle list using fisher-yates shuffle."""
+    result = l[:]
+    shuffle(result)
+    return result
+
