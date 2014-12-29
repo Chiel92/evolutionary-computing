@@ -60,13 +60,13 @@ def find_popsize(fitness, crossover, mutation=False):
 
     # Find bounds for popsize
     while 1:
-        print('Bounds: ({}, infinity)'.format(popsize))
         if test_popsize(popsize, fitness, crossover, mutation):
             break
         else:
             if popsize == 1280:
                 return popsize
             popsize *= 2
+        print('Bounds: ({}, infinity)'.format(popsize))
 
     upperbound = popsize
     lowerbound = int(popsize / 2)
@@ -93,8 +93,8 @@ def test_popsize(popsize, fitness, crossover, mutation):
             failures += 1
         if failures > 1:
             break
-    print('failures: {}'.format(failures))
-    print('optimum:  {}'.format(tostring(optimum)))
-    print('solution: {}'.format(tostring(solution)))
+    #print('failures: {}'.format(failures))
+    #print('optimum:  {}'.format(tostring(optimum)))
+    #print('solution: {}'.format(tostring(solution)))
     return failures <= 1
 
