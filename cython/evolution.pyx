@@ -7,7 +7,9 @@ from heapq import nlargest
 
 
 def natural_selection(int popsize, list population, fitness):
-    return sorted(population, key=fitness)[-popsize:]
+    population.sort(key=fitness)
+    return population[-popsize:]
+    #return sorted(population, key=fitness)[-popsize:]
     #return nlargest(popsize, population, key=fitness)
 
 
@@ -56,7 +58,6 @@ def evolve(int popsize, fitness, crossover, mutation):
                 offspring[i] = mutate(offspring[i])
 
         # Survival of the fittest
-        #newpopulation = nlargest(popsize, population + offspring, key=fitness)
         newpopulation = natural_selection(popsize, population + offspring, fitness)
 
         # Terminate if offspring doesn't survive

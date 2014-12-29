@@ -2,7 +2,7 @@
 This module contains all kinds of fitness functions.
 """
 
-from bitset cimport uint128, index, size
+from bitset cimport uint128, index, size, size_int
 from bitset import iterate
 from utils cimport randomint
 
@@ -49,7 +49,7 @@ cpdef int td_trap(uint128 x):
         y = x & 15
 
         if y != 15:
-            result += 3 - size(y)
+            result += 3 - size_int(y)
         else:
             result += 4
         x >>= 4
@@ -67,7 +67,7 @@ cpdef double tn_trap(uint128 x):
         y = x & 15
 
         if y != 15:
-            result += (3 - size(y))
+            result += (3 - size_int(y))
         else:
             result += 8
         x >>= 4
