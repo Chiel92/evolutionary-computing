@@ -4,10 +4,12 @@ from operators import two_point_crossover, uniform_crossover
 
 
 def experiment1():
-    for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap]:
-    #for fitness in [count_ones]:
+    data = []
+    #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap]:
+    for fitness in [count_ones]:
     #for fitness in [count_ones, lin_scaled_count_ones]:
-        print(find_popsize(fitness, two_point_crossover))
+        data.extend(list(find_popsize(fitness, two_point_crossover)))
+    return data
 
 
 def experiment2():

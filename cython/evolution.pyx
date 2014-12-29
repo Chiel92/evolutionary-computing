@@ -73,15 +73,21 @@ def evolve(int popsize, fitness, crossover, mutation):
 
 
 def find_popsize(fitness, crossover, mutation=False):
+    tries = 30
+    min_successes = 29
+
     popsize = 10
 
     # Find bounds for popsize
     while 1:
-        if test_popsize(popsize, fitness, crossover, mutation):
+        successes = test_popsize(tries, popsize, fitness, crossover, mutation)
+        yield (popsize, successes)
+        if successes >= min_successes:
             break
         else:
             if popsize == 1280:
-                return popsize
+                print('Minimal required popsize: {}'.format(popsize))
+                return
             popsize *= 2
         print('Bounds: ({}, infinity)'.format(popsize))
 
@@ -93,25 +99,28 @@ def find_popsize(fitness, crossover, mutation=False):
         print('Bounds: ({}, {})'.format(lowerbound, upperbound))
         popsize = int(round((upperbound + lowerbound) / 2, -1))
         if popsize == lowerbound or popsize == upperbound:
-            return upperbound
+            print('Minimal required popsize: {}'.format(upperbound))
+            return
 
-        if test_popsize(popsize, fitness, crossover, mutation):
+        successes = test_popsize(tries, popsize, fitness, crossover, mutation)
+        yield (popsize, successes)
+        if successes >= min_successes:
             upperbound = popsize
         else:
             lowerbound = popsize
 
 
-def test_popsize(popsize, fitness, crossover, mutation):
+def test_popsize(tries, popsize, fitness, crossover, mutation):
     cdef uint128 optimum = bit(100) - 1
     failures = 0
-    for _ in range(30):
+    for _ in range(tries):
         solution = evolve(popsize, fitness, crossover, mutation)
         if solution != optimum:
             failures += 1
-        if failures > 1:
-            break
+        #if failures > 1:
+            #break
     #print('failures: {}'.format(failures))
     #print('optimum:  {}'.format(tostring(optimum)))
     #print('solution: {}'.format(tostring(solution)))
-    return failures <= 1
+    return tries - failures
 
