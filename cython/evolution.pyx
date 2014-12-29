@@ -88,9 +88,13 @@ def test_popsize(popsize, fitness, crossover, mutation):
     cdef uint128 optimum = bit(100) - 1
     failures = 0
     for _ in range(30):
-        if evolve(popsize, fitness, crossover, mutation) != optimum:
+        solution = evolve(popsize, fitness, crossover, mutation)
+        if solution != optimum:
             failures += 1
         if failures > 1:
             break
+    print('failures: {}'.format(failures))
+    print('optimum:  {}'.format(tostring(optimum)))
+    print('solution: {}'.format(tostring(solution)))
     return failures <= 1
 

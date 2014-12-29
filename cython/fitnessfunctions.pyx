@@ -34,7 +34,7 @@ def count_zeros(uint128 x):
 def lin_scaled_count_ones(uint128 x):
     cdef int result = 0
     for y in iterate(x):
-        result += index(y)
+        result += index(y) + 1
     return result
 
 

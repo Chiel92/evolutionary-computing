@@ -16,6 +16,6 @@ from experiments import experiment1, experiment2, experiment3
 #print(tostring(shuffle(x)))
 
 #experiment1()
-#experiment2()
-experiment3()
+experiment2()
+#experiment3()
 

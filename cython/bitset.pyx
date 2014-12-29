@@ -71,5 +71,5 @@ cpdef tostring(uint128 n):
 
         n >>= 1
         i += 1
-    return ''.join(reversed(bitstring[:100]))
+    return ''.join(reversed(bitstring[:]))
 
