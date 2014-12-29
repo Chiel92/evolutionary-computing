@@ -42,13 +42,13 @@ def td_trap(uint128 x):
     cdef int result = 0, y
 
     for i in range(25):
-        x >>= 4
         y = x & 15
 
         if y != 15:
             result += 3 - size(y)
         else:
             result += 4
+        x >>= 4
 
     return result
 
@@ -58,13 +58,13 @@ def tn_trap(uint128 x):
     cdef int y
 
     for i in range(25):
-        x >>= 4
         y = x & 15
 
         if y != 15:
             result += (3 - size(y)) / 2
         else:
             result += 4
+        x >>= 4
 
     return result
 

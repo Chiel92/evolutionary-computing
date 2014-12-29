@@ -15,7 +15,7 @@ from experiments import experiment1, experiment2, experiment3
 #print(count_ones(y))
 #print(tostring(shuffle(x)))
 
-#experiment1()
-experiment2()
+experiment1()
+#experiment2()
 #experiment3()
 
