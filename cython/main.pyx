@@ -17,7 +17,5 @@ def run():
     #print(count_ones(y))
     #print(tostring(shuffle(x)))
 
-    profile(experiment1)
-    #experiment2()
-    #experiment3()
+    profile(experiment2)
 

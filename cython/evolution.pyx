@@ -6,6 +6,35 @@ from operators import two_point_crossover, uniform_crossover, mutate
 from heapq import nlargest
 
 
+def natural_selection(int popsize, list population, fitness):
+    return sorted(population, key=fitness)[-popsize:]
+    #return nlargest(popsize, population, key=fitness)
+
+
+def select_parents(population, popsize, fitness):
+    parents = []
+    for __ in range(2):
+        shuffle(population)
+        for i in range(0, popsize, 2):
+            x, y = population[i], population[i + 1]
+
+            if fitness(x) >= fitness(y):
+                parents.append(x)
+            else:
+                parents.append(y)
+
+    assert len(parents) == popsize
+    return parents
+
+
+def generate_offspring(parents, popsize, crossover):
+    offspring = []
+    for i in range(0, popsize, 2):
+        x, y = parents[i], parents[i + 1]
+        offspring.extend(crossover(x, y))
+    return offspring
+
+
 def evolve(int popsize, fitness, crossover, mutation):
     cdef list population = [randuint100() for _ in range(popsize)]
     cdef list newpopulation, offspring
@@ -16,24 +45,10 @@ def evolve(int popsize, fitness, crossover, mutation):
         assert len(population) == popsize
 
         # Parent selection
-        parents = []
-        for __ in range(2):
-            shuffle(population)
-            for i in range(0, popsize, 2):
-                x, y = population[i], population[i + 1]
-
-                if fitness(x) >= fitness(y):
-                    parents.append(x)
-                else:
-                    parents.append(y)
-
-        assert len(parents) == popsize
+        parents = select_parents(population, popsize, fitness)
 
         # Offspring generation
-        offspring = []
-        for i in range(0, popsize, 2):
-            x, y = parents[i], parents[i + 1]
-            offspring.extend(crossover(x, y))
+        offspring = generate_offspring(parents, popsize, crossover)
 
         # Mutation
         if mutation:
@@ -41,7 +56,8 @@ def evolve(int popsize, fitness, crossover, mutation):
                 offspring[i] = mutate(offspring[i])
 
         # Survival of the fittest
-        newpopulation = nlargest(popsize, population + offspring, key=fitness)
+        #newpopulation = nlargest(popsize, population + offspring, key=fitness)
+        newpopulation = natural_selection(popsize, population + offspring, fitness)
 
         # Terminate if offspring doesn't survive
         if newpopulation == population:
@@ -49,7 +65,7 @@ def evolve(int popsize, fitness, crossover, mutation):
 
         population = newpopulation
 
-    best_solution = nlargest(1, population, key=fitness)[0]
+    best_solution = max(population, key=fitness)
     #print('Best solution found: {}'.format(tostring(best_solution)))
     #print(tostring(best_solution))
     return best_solution

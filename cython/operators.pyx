@@ -6,7 +6,7 @@ from bitset cimport uint128, tostring, invert
 from utils cimport randomint, randuint128
 from utils import randbitstream
 
-def two_point_crossover(uint128 x, uint128 y):
+cpdef tuple two_point_crossover(uint128 x, uint128 y):
     cdef int k1 = randomint(100)
     cdef int k2 = randomint(100)
     k1, k2 = max(k1, k2), min(k1, k2)
@@ -24,7 +24,7 @@ def two_point_crossover(uint128 x, uint128 y):
     return (x & part1) | (y & part2) | (x & part3), (y & part1) | (x & part2) | (y & part3)
 
 
-def uniform_crossover(uint128 x, uint128 y):
+cpdef tuple uniform_crossover(uint128 x, uint128 y):
     cdef uint128 k = randuint128()
     cdef uint128 fx = 0
     cdef uint128 fy = 0
@@ -43,10 +43,10 @@ def uniform_crossover(uint128 x, uint128 y):
 
 def mutate(uint128 x):
     # Decide number of bits to be flipped
-    cdef uint128 number = 1
+    cdef uint128 number = 1, bit
     randomstream = randbitstream()
     while next(randomstream):
-        number <<= 1
+        number += 1
 
     # Flip random bits
     # NOTE: in theory it is possible that a bit is flipped multiple times

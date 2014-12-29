@@ -7,41 +7,45 @@ from bitset import iterate
 from utils cimport randomint
 
 
-def shuffled(uint128 x):
+cpdef uint128 shuffled(uint128 x):
     """Shuffle bits 0 to 99 using fisher-yates shuffle."""
-    cdef int i, j
+    cdef int i = 99, j
     cdef uint128 t
 
-    for i in range(99, -1 ,-1):
+    while i >= 0:
         j = randomint(i + 1)
 
         if i != j:
             # Swap bit positions i and j
             t = ((x >> i) ^ (x >> j)) & 1 # XOR temporary
             x = x ^ ((t << i) | (t << j))
+        i -= 1
 
     return x
 
 
-def count_ones(uint128 x):
+cpdef int count_ones(uint128 x):
     return size(x)
 
 
-def count_zeros(uint128 x):
+cpdef int count_zeros(uint128 x):
     return 128 - size(x)
 
 
-def lin_scaled_count_ones(uint128 x):
-    cdef int result = 0
-    for y in iterate(x):
-        result += index(y) + 1
+cpdef int lin_scaled_count_ones(uint128 x):
+    cdef int result = 0, i = 1
+    while i <= 100:
+        if x & 1:
+            result += i
+        x >>= 1
+        i += 1
     return result
 
 
-def td_trap(uint128 x):
-    cdef int result = 0, y
+cpdef int td_trap(uint128 x):
+    cdef int result = 0, y, i = 0
 
-    for i in range(25):
+    while i < 25:
         y = x & 15
 
         if y != 15:
@@ -49,33 +53,33 @@ def td_trap(uint128 x):
         else:
             result += 4
         x >>= 4
+        i += 1
 
     return result
 
 
-def tn_trap(uint128 x):
-    cdef double result = 0
+cpdef double tn_trap(uint128 x):
+    """To save a division we work with double the score."""
+    cdef double result = 0, i = 0
     cdef int y
 
-    for i in range(25):
+    while i < 25:
         y = x & 15
 
         if y != 15:
-            result += (3 - size(y)) / 2
+            result += (3 - size(y))
         else:
-            result += 4
+            result += 8
         x >>= 4
+        i += 1
 
     return result
 
 
-def rd_trap(uint128 x):
-    x = shuffled(x)
-    return td_trap(x)
+cpdef int rd_trap(uint128 x):
+    return td_trap(shuffled(x))
 
 
-def rn_trap(uint128 x):
-    x = shuffled(x)
-    return tn_trap(x)
-
+cpdef double rn_trap(uint128 x):
+    return tn_trap(shuffled(x))
 

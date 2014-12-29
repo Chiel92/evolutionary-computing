@@ -6,7 +6,7 @@ from bitset cimport bit
 
 
 # Seed the random number generator
-srand(time(NULL));
+#srand(time(NULL));
 
 
 cdef extern from "stdlib.h":
