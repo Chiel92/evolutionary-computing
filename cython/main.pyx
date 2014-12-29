@@ -30,12 +30,12 @@ def plot_success_popsize():
     data = pickle.load(open('output/exp-1', 'rb'))
 
     plt.subplot(121)
-    styles = ['ro', 'g^', 'bs', 'cD', 'mh', 'k8']
+    styles = ['ro', 'g^', 'bs', 'cD', 'mh', 'k+']
     for i, (label, points) in enumerate(data):
         plt.plot([p[0] for p in points], [p[1] for p in points], styles[i], label=label)
 
 
-    plt.axis([0, 1300, 0, 35])
+    plt.axis([-10, 1340, -.2, 31])
     plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., numpoints=1)
     plt.title('Performance of population sizes with various fitness functions')
     plt.xlabel('Population size')
