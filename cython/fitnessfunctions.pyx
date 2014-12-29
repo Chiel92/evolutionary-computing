@@ -25,6 +25,7 @@ cpdef uint128 shuffled(uint128 x):
 
 
 cpdef int count_ones(uint128 x):
+    """Counting ones"""
     return size(x)
 
 
@@ -33,6 +34,7 @@ cpdef int count_zeros(uint128 x):
 
 
 cpdef int lin_scaled_count_ones(uint128 x):
+    """Linearly scaled counting ones"""
     cdef int result = 0, i = 1
     while i <= 100:
         if x & 1:
@@ -43,6 +45,7 @@ cpdef int lin_scaled_count_ones(uint128 x):
 
 
 cpdef int td_trap(uint128 x):
+    """Tightly linked deceptive trap"""
     cdef int result = 0, y, i = 0
 
     while i < 25:
@@ -59,7 +62,8 @@ cpdef int td_trap(uint128 x):
 
 
 cpdef double tn_trap(uint128 x):
-    """To save a division we work with double the score."""
+    """Tightly linked non-deceptive trap"""
+    # To save a division we work with double the score.
     cdef double result = 0, i = 0
     cdef int y
 
@@ -77,9 +81,11 @@ cpdef double tn_trap(uint128 x):
 
 
 cpdef int rd_trap(uint128 x):
+    """Randomly linked deceptive trap"""
     return td_trap(shuffled(x))
 
 
 cpdef double rn_trap(uint128 x):
+    """Randomly linked non-deceptive trap"""
     return tn_trap(shuffled(x))
 

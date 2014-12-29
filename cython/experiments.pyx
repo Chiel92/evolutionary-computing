@@ -5,10 +5,9 @@ from operators import two_point_crossover, uniform_crossover
 
 def experiment1():
     data = []
-    #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap]:
-    for fitness in [count_ones]:
-    #for fitness in [count_ones, lin_scaled_count_ones]:
-        data.extend(list(find_popsize(fitness, two_point_crossover)))
+    for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap]:
+    #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
+        data.append((fitness.__doc__, list(find_popsize(fitness, two_point_crossover))))
     return data
 
 

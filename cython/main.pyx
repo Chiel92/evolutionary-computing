@@ -20,21 +20,26 @@ def run():
     #print(count_ones(y))
     #print(tostring(shuffle(x)))
 
-    generate_data()
+    #generate_data()
     plot_success_popsize()
 
 def generate_data():
-    data = experiment1()
-    print('data: {}'.format(data))
-    pickle.dump(data, open('data/exp-1', 'wb'))
+    pickle.dump(experiment1(), open('output/exp-1', 'wb'))
 
 def plot_success_popsize():
-    data = pickle.load(open('data/exp-1', 'rb'))
-    plt.plot([d[0] for d in data], [d[1] for d in data], 'ro')
-    plt.axis([0, 2000, 0, 100])
+    data = pickle.load(open('output/exp-1', 'rb'))
+
+    plt.subplot(121)
+    styles = ['ro', 'g^', 'bs', 'cD', 'mh', 'k8']
+    for i, (label, points) in enumerate(data):
+        plt.plot([p[0] for p in points], [p[1] for p in points], styles[i], label=label)
+
+
+    plt.axis([0, 1300, 0, 35])
+    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., numpoints=1)
+    plt.title('Performance of population sizes with various fitness functions')
     plt.xlabel('Population size')
     plt.ylabel('Successes')
     plt.grid(True)
-    plt.title('Performance of various population sizes')
     plt.show()
 

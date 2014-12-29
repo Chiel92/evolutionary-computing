@@ -35,7 +35,7 @@ def evolve(int popsize, fitness, crossover, mutation):
 
     # Population is kept sorted throughout the algorithm
     population.sort(key=fitness, reverse=True)
-    assert all(fitness(population[i]) >= fitness(population[i+1]) for i in range(len(population) - 1))
+    #assert all(fitness(population[i]) >= fitness(population[i+1]) for i in range(len(population) - 1))
 
     while 1:
         assert len(population) == popsize
@@ -44,7 +44,7 @@ def evolve(int popsize, fitness, crossover, mutation):
         parents = select_parents(population, popsize, fitness)
         parents.extend(select_parents(shuffled(population), popsize, fitness))
 
-        assert all(fitness(population[i]) >= fitness(population[i+1]) for i in range(len(population) - 1))
+        #assert all(fitness(population[i]) >= fitness(population[i+1]) for i in range(len(population) - 1))
         assert len(parents) == popsize
 
         # Offspring generation
