@@ -6,29 +6,54 @@ from operators import two_point_crossover, uniform_crossover
 
 def binarysearch_experiment1():
     data = []
-    #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap]:
-    for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
+    for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap]:
+    #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
+        print(fitness.__doc__)
         data.append((fitness.__doc__, list(binarysearch_popsize(fitness, two_point_crossover))))
     return data
 
 
 def binarysearch_experiment2():
+    data = []
     for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
-        #for fitness in [count_ones, lin_scaled_count_ones]:
-        print(binarysearch_popsize(fitness, uniform_crossover))
+        print(fitness.__doc__)
+        data.append((fitness.__doc__, list(binarysearch_popsize(fitness, uniform_crossover))))
+    return data
 
 
 def binarysearch_experiment3():
-    for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
-        #for fitness in [tn_trap]:
-        print(binarysearch_popsize(fitness, uniform_crossover, mutation=True))
+    data = []
+    #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
+    for fitness in [td_trap]:
+        print(fitness.__doc__)
+        data.append((fitness.__doc__, list(binarysearch_popsize(fitness, uniform_crossover, mutation=True))))
+    return data
+
 
 def plot_experiment1():
     data = []
     #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap]:
     for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
+        print(fitness.__doc__)
         data.append((fitness.__doc__, list(plot_popsize(fitness, two_point_crossover))))
     return data
+
+
+def plot_experiment2():
+    data = []
+    for fitness in [count_ones, lin_scaled_count_ones, tn_trap]:
+        print(fitness.__doc__)
+        data.append((fitness.__doc__, list(plot_popsize(fitness, uniform_crossover))))
+    return data
+
+
+def plot_experiment3():
+    data = []
+    for fitness in [count_ones, lin_scaled_count_ones, tn_trap]:
+        print(fitness.__doc__)
+        data.append((fitness.__doc__, list(plot_popsize(fitness, uniform_crossover, mutation=True))))
+    return data
+
 
 def plot_popsize(fitness, crossover, mutation=False):
     tries = 60

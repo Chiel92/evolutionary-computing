@@ -2,7 +2,7 @@ from bitset cimport uint128, tostring, index, size, invert, bit
 from fitnessfunctions import count_ones, lin_scaled_count_ones, td_trap, tn_trap
 from operators import two_point_crossover, uniform_crossover, randbitstream, mutate
 
-from experiments import binarysearch_experiment1, binarysearch_experiment2, binarysearch_experiment3, plot_experiment1
+import experiments as exp
 from profiling import profile
 import matplotlib.pyplot as plt
 import pickle
@@ -19,11 +19,11 @@ def run():
     #print(count_ones(y))
     #print(tostring(shuffle(x)))
 
-    #generate_data()
+    generate_data()
     plot_success_popsize()
 
 def generate_data():
-    pickle.dump(plot_experiment1(), open('output/exp-1', 'wb'))
+    pickle.dump(exp.plot_experiment2(), open('output/exp-1', 'wb'))
 
 def plot_success_popsize():
     data = pickle.load(open('output/exp-1', 'rb'))

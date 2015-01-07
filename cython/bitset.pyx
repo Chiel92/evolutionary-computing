@@ -20,9 +20,11 @@ cdef int index(uint128 x):
     cdef int part2 = __builtin_ctzll(<unsigned long long>(x >> 64))
     return part1 if part1 < 64 else 64 + part2
 
+
 cdef int size_int(int x):
     """Return size of given int."""
     return __builtin_popcount(x)
+
 
 cdef int size(uint128 x):
     """Return size of given uint128."""

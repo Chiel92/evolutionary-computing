@@ -6,7 +6,7 @@ from bitset cimport bit
 
 
 # Seed the random number generator
-#srand(time(NULL));
+srand(time(NULL))
 
 
 cdef extern from "stdlib.h":
@@ -44,13 +44,18 @@ def randbitstream():
             yield bool(sample & i)
             i <<= 1
 
+
 def shuffle(list l):
     """Shuffle list using fisher-yates shuffle."""
     cdef int j
 
     for i in range(len(l) - 1, -1 ,-1):
         j = randomint(i + 1)
-        l[i], l[j] = l[j], l[i]
+        try:
+            l[i], l[j] = l[j], l[i]
+        except IndexError:
+            print(l, i, j)
+
 
 def shuffled(l):
     """Shuffle list using fisher-yates shuffle."""
