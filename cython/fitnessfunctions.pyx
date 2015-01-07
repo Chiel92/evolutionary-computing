@@ -24,6 +24,24 @@ cpdef uint128 shuffled(uint128 x):
     return x
 
 
+cpdef uint128 shuffled_fixed(list pattern, uint128 x):
+    """Shuffle bits 0 to 99 using fisher-yates shuffle according to given pattern."""
+    cdef int i = 99, j
+    cdef uint128 t
+
+    while i >= 0:
+        #j = randomint(i + 1)
+        j = pattern[i]
+
+        if i != j:
+            # Swap bit positions i and j
+            t = ((x >> i) ^ (x >> j)) & 1 # XOR temporary
+            x = x ^ ((t << i) | (t << j))
+        i -= 1
+
+    return x
+
+
 cpdef int count_ones(uint128 x):
     """Counting ones"""
     return size(x)
@@ -80,12 +98,14 @@ cpdef double tn_trap(uint128 x):
     return result
 
 
+rd_shuffle_pattern = [randomint(i + 1) for i in range(0, 100)]
 cpdef int rd_trap(uint128 x):
     """Randomly linked deceptive trap"""
-    return td_trap(shuffled(x))
+    return td_trap(shuffled_fixed(rd_shuffle_pattern, x))
 
 
+rn_shuffle_pattern = [randomint(i + 1) for i in range(0, 100)]
 cpdef double rn_trap(uint128 x):
     """Randomly linked non-deceptive trap"""
-    return tn_trap(shuffled(x))
+    return tn_trap(shuffled_fixed(rn_shuffle_pattern, x))
 

@@ -1,1 +1,1 @@
-python3 -c 'import main'
+python3 -c 'import main;main.run()'

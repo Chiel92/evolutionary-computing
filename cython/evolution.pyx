@@ -29,6 +29,7 @@ def generate_offspring(list parents, int popsize, crossover):
 
 def evolve(int popsize, fitness, crossover, mutation):
     cdef list population = [randuint100() for _ in range(popsize)]
+
     cdef list newpopulation, offspring
     cdef uint128 x, y
     cdef list parents
@@ -71,56 +72,4 @@ def evolve(int popsize, fitness, crossover, mutation):
     #print(tostring(best_solution))
     return best_solution
 
-
-def find_popsize(fitness, crossover, mutation=False):
-    tries = 30
-    min_successes = 29
-
-    popsize = 10
-
-    # Find bounds for popsize
-    while 1:
-        successes = test_popsize(tries, popsize, fitness, crossover, mutation)
-        yield (popsize, successes)
-        if successes >= min_successes:
-            break
-        else:
-            if popsize == 1280:
-                print('Minimal required popsize: {}'.format(popsize))
-                return
-            popsize *= 2
-        print('Bounds: ({}, infinity)'.format(popsize))
-
-    upperbound = popsize
-    lowerbound = int(popsize / 2)
-
-    # Find popsize
-    while 1:
-        print('Bounds: ({}, {})'.format(lowerbound, upperbound))
-        popsize = int(round((upperbound + lowerbound) / 2, -1))
-        if popsize == lowerbound or popsize == upperbound:
-            print('Minimal required popsize: {}'.format(upperbound))
-            return
-
-        successes = test_popsize(tries, popsize, fitness, crossover, mutation)
-        yield (popsize, successes)
-        if successes >= min_successes:
-            upperbound = popsize
-        else:
-            lowerbound = popsize
-
-
-def test_popsize(tries, popsize, fitness, crossover, mutation):
-    cdef uint128 optimum = bit(100) - 1
-    failures = 0
-    for _ in range(tries):
-        solution = evolve(popsize, fitness, crossover, mutation)
-        if solution != optimum:
-            failures += 1
-        #if failures > 1:
-            #break
-    #print('failures: {}'.format(failures))
-    #print('optimum:  {}'.format(tostring(optimum)))
-    #print('solution: {}'.format(tostring(solution)))
-    return tries - failures
 
