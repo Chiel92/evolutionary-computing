@@ -2,12 +2,31 @@ from bitset cimport uint128, tostring, bit
 from evolution import evolve
 from fitnessfunctions import count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap
 from operators import two_point_crossover, uniform_crossover
+from profiling import profile
+
+
+def profile_exp1():
+    for fitness, popsize in [(count_ones, 310), (lin_scaled_count_ones, 730),
+            (td_trap, 1210), (tn_trap, 610)]:
+        print(fitness.__doc__)
+        profile(lambda: evolve(popsize, fitness, two_point_crossover, mutation=False))
+
+def profile_exp2():
+    for fitness, popsize in [(count_ones, 70), (lin_scaled_count_ones, 160),
+            (tn_trap, 850)]:
+        print(fitness.__doc__)
+        profile(lambda: evolve(popsize, fitness, uniform_crossover, mutation=False))
+
+def profile_exp3():
+    for fitness, popsize in [(count_ones, 110), (lin_scaled_count_ones, 90),
+            (tn_trap, 490)]:
+        print(fitness.__doc__)
+        profile(lambda: evolve(popsize, fitness, uniform_crossover, mutation=True))
 
 
 def binarysearch_experiment1():
     data = []
     for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap]:
-    #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
         print(fitness.__doc__)
         data.append((fitness.__doc__, list(binarysearch_popsize(fitness, two_point_crossover))))
     return data
@@ -23,8 +42,7 @@ def binarysearch_experiment2():
 
 def binarysearch_experiment3():
     data = []
-    #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
-    for fitness in [td_trap]:
+    for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
         print(fitness.__doc__)
         data.append((fitness.__doc__, list(binarysearch_popsize(fitness, uniform_crossover, mutation=True))))
     return data
@@ -32,7 +50,6 @@ def binarysearch_experiment3():
 
 def plot_experiment1():
     data = []
-    #for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap]:
     for fitness in [count_ones, lin_scaled_count_ones, td_trap, tn_trap]:
         print(fitness.__doc__)
         data.append((fitness.__doc__, list(plot_popsize(fitness, two_point_crossover))))

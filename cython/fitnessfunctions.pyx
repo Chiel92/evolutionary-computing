@@ -60,7 +60,7 @@ cpdef int td_trap(uint128 x):
 cpdef int tn_trap(uint128 x):
     """Tightly linked non-deceptive trap"""
     # To save a division we work with double the score.
-    cdef int result = 0, y, i = 0
+    cdef int result = 0, y = 0, i = 0
 
     while i < 25:
         y = x & 15

@@ -19,11 +19,17 @@ def run():
     #print(count_ones(y))
     #print(tostring(shuffle(x)))
 
-    generate_data()
-    plot_success_popsize()
+    #generate_data()
+    #plot_success_popsize()
+
+    #list(exp.binarysearch_popsize(td_trap, uniform_crossover))
+    #print('Done')
+    exp.profile_exp1()
+
 
 def generate_data():
-    pickle.dump(exp.plot_experiment2(), open('output/exp-1', 'wb'))
+    pickle.dump(exp.binarysearch_experiment3(), open('output/exp-1', 'wb'))
+
 
 def plot_success_popsize():
     data = pickle.load(open('output/exp-1', 'rb'))
