@@ -24,7 +24,7 @@ def run():
 
     #list(exp.binarysearch_popsize(td_trap, uniform_crossover))
     #print('Done')
-    exp.profile_exp1()
+    exp.profile_exp3()
 
 
 def generate_data():

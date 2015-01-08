@@ -18,6 +18,17 @@
     \ensuremath{\left\lbrace #1 \IfNoValueTF{#2}{}{\, \middle|\, #2} \right\rbrace}%
 }
 
+\newcommand{\mytable}[3]{
+\begin{table}[H]
+\begin{tabular}{|ll|}
+\hline
+\textbf{Required population size} & #1            \\ \hline
+\textbf{Function evaluations}     & #2            \\ \hline
+\textbf{Corresponding CPU time}   & #3 seconds    \\ \hline
+\end{tabular}
+\end{table}
+}
+
 \begin{document}
 \maketitle
 
@@ -26,57 +37,16 @@
 \subsection*{Experiment 1}
 
 \subsubsection*{Counting ones}
-%Required population size: 310
-%Function evaluations: 51094
-%Corresponding cumulative CPU time: 0.013 seconds
-\begin{table}[H]
-\begin{tabular}{|ll|}
-\hline
-\textbf{Required population size} & 310              \\ \hline
-\textbf{Function evaluations}     & 51094            \\ \hline
-\textbf{Corresponding CPU time}   & 0.013 seconds    \\ \hline
-\end{tabular}
-\end{table}
-
+\mytable{310}{51094}{0.013}
 
 \subsubsection*{Linearly scaled counting ones}
-%Required population size: 730
-%Function evaluations: 164174
-%Corresponding cumulative CPU time: 0.030 seconds
-\begin{table}[H]
-\begin{tabular}{|ll|}
-\hline
-\textbf{Required population size} & 730              \\ \hline
-\textbf{Function evaluations}     & 164174            \\ \hline
-\textbf{Corresponding CPU time}   & 0.030 seconds    \\ \hline
-\end{tabular}
-\end{table}
+\mytable{730}{164174}{0.030}
 
 \subsubsection*{Tightly linked deceptive trap}
-%Required population size: 1210
-%Function evaluations: 243142
-%Corresponding cumulative CPU time: 0.429 seconds
-\begin{table}[H]
-\begin{tabular}{|ll|}
-\hline
-\textbf{Required population size} & 1210              \\ \hline
-\textbf{Function evaluations}     & 243142            \\ \hline
-\textbf{Corresponding CPU time}   & 0.429 seconds    \\ \hline
-\end{tabular}
-\end{table}
+\mytable{1210}{243142}{0.429}
 
 \subsubsection*{Tightly linked non-deceptive trap}
-%Required population size: 610
-%Function evaluations: 93278
-%Corresponding cumulative CPU time: 0.177 seconds
-\begin{table}[H]
-\begin{tabular}{|ll|}
-\hline
-\textbf{Required population size} & 610              \\ \hline
-\textbf{Function evaluations}     & 93278            \\ \hline
-\textbf{Corresponding CPU time}   & 0.177 seconds    \\ \hline
-\end{tabular}
-\end{table}
+\mytable{610}{93278}{0.177}
 
 
 \begin{figure}[H]
@@ -88,6 +58,17 @@
 
 
 \subsection*{Experiment 2}
+
+\subsubsection*{Counting ones}
+\mytable{70}{9822}{0.002}
+
+\subsubsection*{Linearly scaled counting ones}
+\mytable{160}{28260}{0.005}
+
+\subsubsection*{Tightly linked non-deceptive trap}
+\mytable{850}{242154}{0.454}
+
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/exp2.png}
@@ -97,6 +78,17 @@
 
 
 \subsection*{Experiment 3}
+
+\subsubsection*{Counting ones}
+\mytable{110}{27964}{0.007}
+
+\subsubsection*{Linearly scaled counting ones}
+\mytable{90}{49764}{0.010}
+
+\subsubsection*{Tightly linked non-deceptive trap}
+\mytable{490}{509742}{0.582}
+
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/exp3.png}
