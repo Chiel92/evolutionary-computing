@@ -28,26 +28,13 @@
     \ensuremath{\left\lbrace #1 \IfNoValueTF{#2}{}{\, \middle|\, #2} \right\rbrace}%
 }
 
-\newcommand{\mytable}[3]{\
-\begin{table}[H]
-\caption*{Table Title}
-\begin{tabular}{ll}
-\hline
-\textbf{Required population size} & #1            \\ \hline
-\textbf{Function evaluations}     & #2            \\ \hline
-\textbf{Corresponding CPU time}   & #3 seconds    \\ \hline
-\end{tabular}
-%\caption[Table caption text]{Table taken from }
-\end{table}
-}
-
 \begin{document}
 \maketitle
 
 \section{Implementation}
 
 \subsection*{Programming language}
-The algorithms have been implemented in Cython \cite{cython}.
+The algorithms have been implemented in Cython~\cite{cython}.
 Cython is a programming language that makes writing C extensions for the Python language almost as easy as Python itself.
 The source code gets translated into optimized C/C++ code and compiled as Python extension modules.
 This allows for very fast program execution, while keeping up the high programmer productivity for which the Python language is well known.
@@ -64,19 +51,28 @@ However, the bisection search still has been implemented as required according t
 It has been used to determine the population size that is used to profile the fitness functions.
 
 Other than the above, the assignment instructions have been followed precisely.
+The obtained result can be found in Section~\ref{observations}.
 
 
 \section{Observations}
+\label{observations}
 
 \subsection*{Experiment 1}
 Both randomly linked trap functions never reached an optimum.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[totalheight=0.7\textheight]{images/exp1.png}
+    \caption{Number of success per population size}
+\label{fig:exp1}
+\end{figure}
 
 \begin{adjustwidth}{-1cm}{}
 \begin{minipage}{\linewidth}
 \centering
 \captionof{table}{Table Title}
 \label{tab:title}
-\begin{tabular}{llll}%{C{1.25in} C{.85in} *4{C{.75in}}}
+\begin{tabular}{llll}
 \toprule[1.5pt]
 \bf Fitness function & \bf Population size & \bf Function evaluations & \bf CPU time\\\midrule
 Counting ones & 310 & 51094 & 0.013 seconds \\
@@ -90,34 +86,23 @@ Should be a caption
 \end{minipage}
 \end{adjustwidth}
 
-%\subsubsection*{Counting ones}
-%\mytable{310}{51094}{0.013}
-%\subsubsection*{Linearly scaled counting ones}
-%\mytable{730}{164174}{0.030}
-%\subsubsection*{Tightly linked deceptive trap}
-%\mytable{1210}{243142}{0.429}
-%\subsubsection*{Tightly linked non-deceptive trap}
-%\mytable{610}{93278}{0.177}
-%\subsubsection*{Randomly linked (non-)deceptive trap}
-%Both randomly linked trap functions never reached an optimum.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{images/exp1.png}
-    \caption{Number of success per population size}
-\label{fig:exp1}
-\end{figure}
-
 
 \subsection*{Experiment 2}
 Tightly linked deceptive trap never reached an optimum.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[totalheight=0.7\textheight]{images/exp2.png}
+    \caption{Number of success per population size}
+\label{fig:exp2}
+\end{figure}
 
 \begin{adjustwidth}{-1cm}{}
 \begin{minipage}{\linewidth}
 \centering
 \captionof{table}{Table Title}
 \label{tab:title}
-\begin{tabular}{llll}%{C{1.25in} C{.85in} *4{C{.75in}}}
+\begin{tabular}{llll}
 \toprule[1.5pt]
 \bf Fitness function & \bf Population size & \bf Function evaluations & \bf CPU time\\\midrule
 Counting ones & 70 & 9822 & 0.002 seconds \\
@@ -130,33 +115,23 @@ Should be a caption
 \end{minipage}
 \end{adjustwidth}
 
-%\subsubsection*{Counting ones}
-%\mytable{70}{9822}{0.002}
-%\subsubsection*{Linearly scaled counting ones}
-%\mytable{160}{28260}{0.005}
-%\subsubsection*{Tightly linked non-deceptive trap}
-%\mytable{850}{242154}{0.454}
-%\subsubsection*{Tightly linked deceptive trap}
-%Never reached an optimum.
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{images/exp2.png}
-    \caption{Number of success per population size}
-\label{fig:exp2}
-\end{figure}
-
 
 \subsection*{Experiment 3}
 Tightly linked deceptive trap never reached an optimum.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[totalheight=0.7\textheight]{images/exp3.png}
+    \caption{Number of success per population size}
+\label{fig:exp3}
+\end{figure}
 
 \begin{adjustwidth}{-1cm}{}
 \begin{minipage}{\linewidth}
 \centering
 \captionof{table}{Table Title}
 \label{tab:title}
-\begin{tabular}{llll}%{C{1.25in} C{.85in} *4{C{.75in}}}
+\begin{tabular}{llll}
 \toprule[1.5pt]
 \bf Fitness function & \bf Population size & \bf Function evaluations & \bf CPU time\\\midrule
 Counting ones & 110 & 27964 & 0.007 seconds \\
@@ -168,23 +143,6 @@ Tightly linked non-deceptive trap & 490 & 509742 & 0.582 seconds \\
 Should be a caption
 \end{minipage}
 \end{adjustwidth}
-
-%\subsubsection*{Counting ones}
-%\mytable{110}{27964}{0.007}
-%\subsubsection*{Linearly scaled counting ones}
-%\mytable{90}{49764}{0.010}
-%\subsubsection*{Tightly linked non-deceptive trap}
-%\mytable{490}{509742}{0.582}
-%\subsubsection*{Tightly linked deceptive trap}
-%Never reached an optimum.
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{images/exp3.png}
-    \caption{Number of success per population size}
-\label{fig:exp3}
-\end{figure}
 
 
 
