@@ -9,7 +9,10 @@ def profile_exp1():
     for fitness, popsize in [(count_ones, 310), (lin_scaled_count_ones, 730),
             (td_trap, 1210), (tn_trap, 610)]:
         print(fitness.__doc__)
-        profile(lambda: evolve(popsize, fitness, two_point_crossover, mutation=False))
+        def dostuff():
+            _, iterations = evolve(popsize, fitness, two_point_crossover, mutation=False, return_iterations=True)
+            print('Iterations: {}'.format(iterations))
+        profile(dostuff)
 
 def profile_exp2():
     for fitness, popsize in [(count_ones, 70), (lin_scaled_count_ones, 160),

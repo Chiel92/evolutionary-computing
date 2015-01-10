@@ -27,7 +27,7 @@ def generate_offspring(list parents, int popsize, crossover):
     return offspring
 
 
-def evolve(int popsize, fitness, crossover, mutation):
+def evolve(int popsize, fitness, crossover, mutation, return_iterations=False):
     cdef list population = [randuint100() for _ in range(popsize)]
 
     cdef list newpopulation, offspring
@@ -38,7 +38,9 @@ def evolve(int popsize, fitness, crossover, mutation):
     population.sort(key=fitness, reverse=True)
     assert all(fitness(population[i]) >= fitness(population[i+1]) for i in range(len(population) - 1))
 
+    iterations = 0
     while 1:
+        iterations += 1
         assert len(population) == popsize
 
         # Parent selection
@@ -70,6 +72,8 @@ def evolve(int popsize, fitness, crossover, mutation):
     best_solution = population[0]
     #print('Best solution found: {}'.format(tostring(best_solution)))
     #print(tostring(best_solution))
+    if return_iterations:
+        return best_solution, iterations
     return best_solution
 
 
