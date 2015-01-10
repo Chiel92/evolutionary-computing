@@ -23,8 +23,10 @@ def profile_exp2():
 def profile_exp3():
     for fitness, popsize in [(count_ones, 110), (lin_scaled_count_ones, 90),
             (tn_trap, 490)]:
-        print(fitness.__doc__)
-        profile(lambda: evolve(popsize, fitness, uniform_crossover, mutation=True))
+        def dostuff():
+            _, iterations = evolve(popsize, fitness, uniform_crossover, mutation=True, return_iterations=True)
+            print('Iterations: {}'.format(iterations))
+        profile(dostuff)
 
 
 def binarysearch_experiment1():
