@@ -2,33 +2,19 @@ from bitset cimport uint128, tostring, index, size, invert, bit
 from fitnessfunctions import count_ones, lin_scaled_count_ones, td_trap, tn_trap
 from operators import two_point_crossover, uniform_crossover, randbitstream, mutate
 
-import experiments as exp
 from profiling import profile
 import matplotlib.pyplot as plt
 import pickle
 
+from linkagetree import gomea
 
 def run():
-    # x contains a number consisting of more than 64 1's
-    #cdef uint128 x = bit(100) - 1 - bit(95) - bit(63) - bit(31)
-    #cdef uint128 y = bit(100) - 1
-
-    #print(x)
-    #print(tostring(x))
-    #print(count_ones(x))
-    #print(count_ones(y))
-    #print(tostring(shuffle(x)))
-
-    #generate_data()
-    #plot_success_popsize()
-
-    #list(exp.binarysearch_popsize(td_trap, uniform_crossover))
-    #print('Done')
-    exp.profile_exp3()
+    gomea(10, None)
 
 
 def generate_data():
-    pickle.dump(exp.binarysearch_experiment3(), open('output/exp-1', 'wb'))
+    pass
+    #pickle.dump(exp.binarysearch_experiment3(), open('output/exp-1', 'wb'))
 
 
 def plot_success_popsize():
