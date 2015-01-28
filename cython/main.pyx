@@ -1,15 +1,15 @@
 from bitset cimport uint128, tostring, index, size, invert, bit
-from fitnessfunctions import count_ones, lin_scaled_count_ones, td_trap, tn_trap
+from fitnessfunctions import count_ones, lin_scaled_count_ones, td_trap, tn_trap, rd_trap, rn_trap
 from operators import two_point_crossover, uniform_crossover, randbitstream, mutate
 
 from profiling import profile
 import matplotlib.pyplot as plt
 import pickle
 
-from linkagetree import gomea
+from linkagetree import lgta
 
 def run():
-    gomea(10, None)
+    print(tostring(lgta(100, rd_trap)))
 
 
 def generate_data():

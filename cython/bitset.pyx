@@ -66,7 +66,8 @@ def iterate(uint128 n):
 cpdef tostring(uint128 n):
     bitstring = []
     cdef int i = 0
-    while i < 128:
+    while i < 100:
+    #while i < 128:
         #if i == 32 or i == 64 or i == 96:
             #bitstring.append('|')
 
