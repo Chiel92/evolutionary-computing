@@ -8,22 +8,21 @@ from math import log
 #print(distance.pdist.__doc__)
 #print(linkage.__doc__)
 
-size = 5
+size = 6
 
 def print_matrix(matrix):
-    print('\n'.join(' '.join(str(round(elem, 5)) for elem in row) for row in matrix))
+    print('\n'.join(' '.join('{0:7}'.format(round(elem, 5)) for elem in row) for row in matrix))
 
 
 def gomea(int popsize, fitness):
     cdef list population = [randuint100() for _ in range(20)]
 
-    dmatrix = distance_matrix(population)
-    print(dmatrix)
-    #print(flip_matrix(dmatrix))
+    fos = build_fos(population)
+    print(fos)
     return
 
     while 1:
-        fos = learn_linkagetree(population)
+        fos = build_fos(population)
         for solution in population:
             for subset in fos:
                 donor = choice(population)
@@ -31,26 +30,52 @@ def gomea(int popsize, fitness):
     return solution
 
 
-def learn_linkagetree(population):
-    dmatrix = distance_matrix(population)
-    return linkage(dmatrix, method='average')
-
-
-def distance_matrix(population):
+def build_fos(population):
     observations = []
     for solution in population:
-        observation = [1 if solution & bit(i) else 0 for i in range(size)]
+        #observation = [1 if solution & bit(i) else 0 for i in range(size)]
+        observation = [1 if True else 0 for i in range(size)]
         observations.append(observation)
-    #return observations
-    #observations = flip_matrix(observations)
-    #observations = numpy.matrix(observations)
-    print_matrix(observations)
-    observations = list(zip(*observations))
-    print_matrix(distance_matrix2(population))
 
-    return distance.pdist(observations, 'correlation')
+    dmatrix = jaccard_matrix(observations)
+    lmatrix = linkage(dmatrix, method='average') # average = UPGMA
 
-def foo(p1, p2, p12):
+    #print(observations)
+    #print(dmatrix)
+    #print(lmatrix)
+
+    fos = [[i] for i in range(size)]
+    for i in range(len(lmatrix)):
+        newcluster = fos[int(lmatrix[i][0])] + fos[int(lmatrix[i][1])]
+        fos.append(newcluster)
+
+    return fos
+
+
+def jaccard_matrix(observations):
+    observations = list(zip(*observations)) # Flip matrix
+    return distance.pdist(observations, 'jaccard')
+
+
+def mutual_information_matrix(observations):
+    """Compute the mutual information between every pair of bits in the population."""
+    m = len(observations)
+    result = [[None for _ in range(size)] for _ in range(size)]
+    for i in range(size):
+        for j in range(size):
+            def p(x, y):
+                result = sum(1 for obs in observations if obs[i] == x and obs[j] == y) / m
+                #print(result)
+                return result
+
+            result[i][j] = sum(
+                    I(p(x, 0) + p(x, 1), p(0, y) + p(1, y), p(x, y))
+                    for x in (0, 1) for y in (0, 1)
+                )
+    return result
+
+
+def I(p1, p2, p12):
     if p1 == 0 or p2 == 0:
         result = 0
     elif p12 == 0:
@@ -59,45 +84,6 @@ def foo(p1, p2, p12):
         result = p12 * log(p12 / (p1 * p2), 2)
     return result
 
-def distance_matrix2(population):
-    """Test implementation"""
-    observations = []
-    for solution in population:
-        observation = [1 if solution & bit(i) else 0 for i in range(size)]
-        observations.append(observation)
-
-    m = len(observations)
-    result = [[None for _ in range(size)] for _ in range(size)]
-    for i in range(size):
-        for j in range(size):
-            #p12_11 = sum(1 for x in observations if x[i] == 1 and x[j] == 1) / m
-            #p12_01 = sum(1 for x in observations if x[i] == 0 and x[j] == 1) / m
-            #p12_10 = sum(1 for x in observations if x[i] == 1 and x[j] == 0) / m
-            #p12_00 = sum(1 for x in observations if x[i] == 0 and x[j] == 0) / m
-            #p1 = sum(1 for x in observations if x[i] == 1) / m
-            #p2 = sum(1 for x in observations if x[j] == 1) / m
-            #assert 0 <= p1 <= 1
-            #assert 0 <= p2 <= 1
-            #assert 0 <= p12_00 <= 1
-            #assert 0 <= p12_10 <= 1
-            #assert 0 <= p12_01 <= 1
-            #assert 0 <= p12_11 <= 1
-            #assert p12_10 + p12_11 == p1
-            #assert p12_01 + p12_11 == p2
-
-            #result[i][j] = (foo(p1, p2, p12_11) # 1 1
-                    #+ foo(1 - p1, p2, p12_01) # 0 1
-                    #+ foo(p1, 1 - p2, p12_10) # 1 0
-                    #+ foo(1 - p1, 1 - p2, p12_00) # 0 0
-                #)
-            def p(x, y):
-                return sum(1 for x in observations if x[i] == x and x[j] == y) / m
-
-            result[i][j] = sum(
-                    foo(p(x, 0) + p(x, 1), p(0, y) + p(1, y), p(x, y))
-                    for x in (0, 1) for y in (0, 1)
-                )
-    return result
 
 def flip_matrix(matrix):
     length = len(matrix)
