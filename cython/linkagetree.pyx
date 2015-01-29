@@ -10,11 +10,13 @@ def print_matrix(matrix):
     print('\n'.join(' '.join('{0:7}'.format(round(elem, 5)) for elem in row) for row in matrix))
 
 
-def ltga(popsize, fitness):
+def ltga(popsize, fitness, return_iterations=False):
     cdef list population = [randuint100() & (bit(size + 1) - 1) for _ in range(popsize)]
 
     #for x in population:
         #print(fitness(x))
+
+    iterations = 1
 
     while 1:
         fos = build_fos(population)
@@ -49,10 +51,14 @@ def ltga(popsize, fitness):
         if next_generation == population:
             break
         population = next_generation
+        iterations += 1
 
     #for x in population:
         #print(fitness(x))
-    return max(population, key=fitness)
+    best = max(population, key=fitness)
+    if return_iterations:
+        return best, iterations
+    return best
 
 
 def build_fos(population):

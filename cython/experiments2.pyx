@@ -5,13 +5,13 @@ from linkagetree import ltga
 
 
 def profile_exp():
-    for fitness, popsize in [(count_ones, 310), (lin_scaled_count_ones, 730),
-            (rd_trap, 1210), (rn_trap, 610)]:
+    for fitness, popsize in [(count_ones, 10), (lin_scaled_count_ones, 20),
+            (rd_trap, 50), (rn_trap, 50)]:
         print(fitness.__doc__)
-        #def dostuff():
-            #_, iterations = ltga(popsize, fitness)
-            #print('Iterations: {}'.format(iterations))
-        #profile(dostuff)
+        def dostuff():
+            _, iterations = ltga(popsize, fitness, return_iterations=True)
+            print('Iterations: {}'.format(iterations))
+        profile(dostuff)
 
 
 def binarysearch_experiment():
@@ -35,7 +35,7 @@ def plot_popsize(fitness):
     tries = 60
     min_successes = 58
 
-    for popsize in range(10, 1281, 20):
+    for popsize in range(10, 100, 10):
         print(popsize)
         successes = run_popsize(tries, popsize, fitness)
         yield (popsize, successes)

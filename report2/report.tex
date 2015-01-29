@@ -70,32 +70,31 @@ The obtained results can be found in the sections below.
 
 \section{First Experiment}
 \label{ssec:exp1}
-In Figure~\ref{fig:exp1} the number of successes has been plot against the population size.
-Table~\ref{tab:exp1} shows information concerning the fitness function evaluations.
-Both randomly linked trap functions never reached an optimum, so they are not shown.
+In Figure~\ref{fig:exp} the number of successes has been plot against the population size.
+Table~\ref{tab:exp} shows information concerning the fitness function evaluations.
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[totalheight=0.7\textheight]{images/exp1.png}
+    \includegraphics[totalheight=0.7\textheight]{images/exp.png}
     \caption{Number of success per population size}
-\label{fig:exp1}
+\label{fig:exp}
 \end{figure}
 
 \begin{table}[!htb]
-\begin{adjustwidth}{0cm}{}
+\begin{adjustwidth}{-2cm}{}
 \centering
-\begin{tabular}{lp{2.5cm}p{2.5cm}p{2.8cm}}
+\begin{tabular}{lp{2.5cm}p{2.5cm}p{2.8cm}p{2.5cm}}
 \toprule[1.5pt]
-\bf Fitness function & \bf Population size & \bf Function evaluations & \bf Corresponding CPU time\\\midrule
-Counting ones & 310 & 51094 & 0.013 seconds \\
-Linearly scaled Counting ones & 730 & 164174 & 0.030 seconds \\
-Tightly linked deceptive trap & 1210 & 243142 & 0.429 seconds \\
-Tightly linked non-deceptive trap & 610 & 93278 & 0.177 seconds \\
+\bf Fitness function & \bf Population size & \bf Function evaluations & \bf Corresponding CPU time& \bf Iterations\\\midrule
+Counting ones & 10 & 20010 & 0.006 seconds & 5 \\
+Linearly scaled Counting ones & 20 & 40020 & 0.008 seconds & 5 \\
+Randomly linked deceptive trap & 50 & 200050 & 0.354 seconds & 10 \\
+Randomly linked non-deceptive trap & 50 & 160050 & 0.272 seconds & 8 \\
 \bottomrule[1.25pt]
 \end{tabular}\par
 \bigskip
 \captionof{table}{Fitness function evaluations}
-\label{tab:exp1}
+\label{tab:exp}
 \end{adjustwidth}
 \end{table}
 

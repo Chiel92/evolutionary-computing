@@ -9,12 +9,13 @@ import pickle
 import experiments2 as exp
 
 def run():
-    generate_data()
-    plot_success_popsize()
+    #generate_data()
+    #plot_success_popsize()
+    exp.profile_exp()
 
 
 def generate_data():
-    pickle.dump(exp.binarysearch_experiment(), open('output/exp-2', 'wb'))
+    pickle.dump(exp.plot_experiment(), open('output/exp-2', 'wb'))
 
 
 def plot_success_popsize():
@@ -26,7 +27,8 @@ def plot_success_popsize():
         plt.plot([p[0] for p in points], [p[1] for p in points], styles[i], label=label)
 
 
-    plt.axis([-10, 1340, -.2, 61])
+    #plt.axis([-10, 1340, -.2, 61])
+    plt.axis([-10, 110, -.2, 61])
     plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., numpoints=1)
     plt.title('Performance of population sizes with various fitness functions')
     plt.xlabel('Population size')
