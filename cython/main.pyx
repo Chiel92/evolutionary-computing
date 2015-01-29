@@ -6,19 +6,19 @@ from profiling import profile
 import matplotlib.pyplot as plt
 import pickle
 
-from linkagetree import lgta
+import experiments2 as exp
 
 def run():
-    print(tostring(lgta(100, rd_trap)))
+    generate_data()
+    plot_success_popsize()
 
 
 def generate_data():
-    pass
-    #pickle.dump(exp.binarysearch_experiment3(), open('output/exp-1', 'wb'))
+    pickle.dump(exp.binarysearch_experiment(), open('output/exp-2', 'wb'))
 
 
 def plot_success_popsize():
-    data = pickle.load(open('output/exp-1', 'rb'))
+    data = pickle.load(open('output/exp-2', 'rb'))
 
     plt.subplot(121)
     styles = ['ro', 'g^', 'bs', 'cD', 'mh', 'k+']
