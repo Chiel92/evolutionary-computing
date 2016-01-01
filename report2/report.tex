@@ -118,7 +118,11 @@ previous practical assignment by far.
 Even the randomly linked trap functions are solved easily.
 Neither the number of generations or the population size has to be large in order to
 converge to the global optimum.
-There is more overhead in computional time.
+
+Unsurprisingly, the non-deceptive trap function is easier to solve than the deceptive version,
+and both trap functions are harder than the counting ones variations.
+
+We also observe there is more overhead in computional time.
 The CPU time required is somewhat comparable to the results of the previous practical assignment,
 while the number of function evaluations is lower.
 This may be caused by transformations between our data structures and those of the SciPy library.
@@ -126,8 +130,9 @@ If the clustering algorithm would have been optimized for our datastructures,
 it is likely that the computional time would be even lower.
 
 \paragraph{Conclusion}
-Experimental results for randomly linked trap functions show that the LTGA can solve hard functions efficiently without knowing the actual position of the linked variables on the problem representation.
-The LTGA algorithm appears to take a good compromise between model complexity and search efficiency.
+Experimental results for randomly linked trap functions show that the LTGA can solve hard functions efficiently without having apriori knowledge about the position of the linked variables on the solutions.
+The LTGA algorithm appears to take a good compromise between complexity of the linkage model and search efficiency, compared to the setups that were tested in the first practical assignment.
+This supports the conclusion of Dirk Thierens in \emph{The Linkage Tree Genetic Algorithm}~\cite{dirk}.
 
 
 \begin{thebibliography}{9}
@@ -139,6 +144,13 @@ The Cython compiler, \url{http://cython.org}.
 \bibitem{scipy}
 Eric Jones and Travis Oliphant and Pearu Peterson and others,
 SciPy: Open source scientific tools for Python, \url{http://www.scipy.org}.
+
+\bibitem{dirk}
+Dirk Thierens,
+The Linkage Tree Genetic Algorithm.
+Institute of Information and Computing Sciences
+Universiteit Utrecht, The Netherlands,
+2010.
 
 \end{thebibliography}
 
